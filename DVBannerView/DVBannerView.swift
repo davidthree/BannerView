@@ -191,8 +191,13 @@ class DVBannerView: UIView ,UIScrollViewDelegate{
         
         if offset >= MainBounds.width*CGFloat(self.photoList.count+1){
             scrollView.setContentOffset(CGPoint.init(x: MainBounds.width, y: 0), animated: false)
+            self.pageControlView.currentPage = 0
         }else if offset <= 0{
             scrollView.setContentOffset(CGPoint.init(x: MainBounds.width*CGFloat(self.photoList.count), y: 0), animated: false)
+            self.pageControlView.currentPage = self.textList.count-1
+        }else
+        {
+            self.pageControlView.currentPage = Int(offset/MainBounds.width)-1
         }
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView){
@@ -202,15 +207,15 @@ class DVBannerView: UIView ,UIScrollViewDelegate{
         if offset >= MainBounds.width*CGFloat(self.photoList.count+1)
         {
             self.titleLabel.text = self.textList.first
-            self.pageControlView.currentPage = 0
+            
         }else if offset <= 0
         {
             self.titleLabel.text = self.textList.last
-            self.pageControlView.currentPage = self.textList.count-1
+            
         }else
         {
             self.titleLabel.text = self.textList[Int(offset/MainBounds.width)-1]
-            self.pageControlView.currentPage = Int(offset/MainBounds.width)-1
+            
         }
     }
     
